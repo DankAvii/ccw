@@ -1,0 +1,137 @@
+PRACTICAL 3: RESTful Web Service (Google Map)
+
+STEP 1: Create Web Application
+
+File → New Project
+Java Web → Web Application
+
+Project Name:
+GoogleMap
+
+Select Server:
+Tomcat / GlassFish
+
+Click Finish
+
+STEP 2: Create input.jsp
+
+<html>
+<body>
+
+<h2>Enter Location Coordinates</h2>
+
+<form action="index.jsp">
+
+Latitude:
+<input type="text" name="t1"><br><br>
+
+Longitude:
+<input type="text" name="t2"><br><br>
+
+<input type="submit" value="Show Location">
+
+</form>
+
+</body>
+</html>
+
+STEP 3: Create Google Maps API Key
+
+Go to
+
+https://console.developers.google.com
+
+Login with Google Account
+
+Create Project
+
+Enable:
+
+Google Maps JavaScript API
+
+Go to Credentials
+
+Create API Key
+
+Copy the API Key
+
+STEP 4: Create index.jsp
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<html>
+
+<head>
+
+<style>
+#map {
+height: 400px;
+width: 100%;
+}
+</style>
+
+</head>
+
+<body>
+
+<%
+
+double lati = Double.parseDouble(request.getParameter("t1"));
+double longi = Double.parseDouble(request.getParameter("t2"));
+
+%>
+
+<h3>Google Map</h3>
+
+<div id="map"></div>
+
+<script>
+
+function initMap() {
+
+var location = {lat: <%=lati%>, lng: <%=longi%>};
+
+var map = new google.maps.Map(
+document.getElementById('map'),
+{
+zoom: 8,
+center: location
+});
+
+var marker = new google.maps.Marker({
+position: location,
+map: map
+});
+
+}
+
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
+
+</body>
+
+</html>
+
+Replace YOUR_API_KEY with your Google API Key.
+
+STEP 5: Run Project
+
+Right click project
+
+Run Project
+
+STEP 6: Open in Browser
+
+http://localhost:8080/GoogleMap/input.jsp
+
+STEP 7: Enter Coordinates
+
+Example
+
+Latitude: 19.0760
+Longitude: 72.8777
+
+Google Map will open with marker.

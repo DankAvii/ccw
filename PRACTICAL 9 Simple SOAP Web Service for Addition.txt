@@ -1,0 +1,232 @@
+PRACTICAL 9: Simple SOAP Web Service for Addition
+AIM
+
+To create a SOAP Web Service that performs addition of two numbers and access the service through a web application interface.
+
+STEP 1: Create Web Application
+
+Where: NetBeans IDE
+
+Open NetBeans
+
+Go to
+
+File → New Project
+
+Select
+
+Java Web → Web Application
+
+Enter details
+
+Project Name : p9
+Server : GlassFish Server 4.1
+
+Click Finish
+
+STEP 2: Create Web Service
+
+Where: NetBeans IDE
+
+Right click project p9
+
+New → Web Service
+
+Enter
+
+Web Service Name : Add_web_service
+Package Name : ty
+
+Click Finish
+
+STEP 3: Add Operation
+
+Where: NetBeans IDE
+
+Right click Add_web_service
+
+Add Operation
+
+Enter
+
+Operation Name : addNumbers
+Return Type : int
+
+Add parameters
+
+Parameter	Type
+a	int
+b	int
+
+Click OK
+
+STEP 4: Write Web Service Code
+
+Where: NetBeans (Add_web_service.java)
+
+File:
+
+Add_web_service.java
+Simplified Correct Code
+package ty;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+@WebService(serviceName = "Add_web_service")
+
+public class Add_web_service {
+
+    @WebMethod
+    public int addNumbers(
+        @WebParam(name="a") int a,
+        @WebParam(name="b") int b){
+
+        return a + b;
+
+    }
+
+}
+
+Explanation
+
+return a + b;
+
+Adds two numbers and returns the result.
+
+STEP 5: Run the Web Service
+
+Where: NetBeans Server
+
+Right click Add_web_service
+
+Test Web Service
+
+Browser opens Web Service Tester Page
+
+Example
+
+a = 5
+b = 10
+
+Output
+
+Result = 15
+STEP 6: Copy Tester URL
+
+Where: Browser
+
+Example
+
+http://localhost:8080/p9/Add_web_service?Tester
+STEP 7: Create Web Service Client
+
+Where: NetBeans IDE
+
+Right click project
+
+New → Other
+
+Select
+
+Category : Web Services
+File Type : Web Service Client
+
+Click Next
+
+STEP 8: Enter WSDL Location
+
+Paste URL
+
+http://localhost:8080/p9/Add_web_service?wsdl
+
+Click Finish
+
+NetBeans automatically generates client classes.
+
+STEP 9: Create JSP Page
+
+Where: NetBeans IDE
+
+Right click project
+
+New → JSP
+
+File Name
+
+index.jsp
+Code
+<html>
+
+<head>
+<title>Addition Web Service</title>
+</head>
+
+<body>
+
+<h2>Add Two Numbers</h2>
+
+<form action="indexaction.jsp">
+
+Number 1:
+<input type="text" name="num1">
+
+<br><br>
+
+Number 2:
+<input type="text" name="num2">
+
+<br><br>
+
+<input type="submit" value="Add">
+
+</form>
+
+</body>
+
+</html>
+STEP 10: Create Second JSP File
+
+Where: NetBeans IDE
+
+Create file
+
+indexaction.jsp
+Simplified Code
+<%@page import="ty.Add_web_service"%>
+<%@page import="ty.Add_web_serviceService"%>
+
+<%
+
+int a = Integer.parseInt(request.getParameter("num1"));
+int b = Integer.parseInt(request.getParameter("num2"));
+
+Add_web_serviceService service = new Add_web_serviceService();
+Add_web_service port = service.getAdd_web_servicePort();
+
+int result = port.addNumbers(a,b);
+
+%>
+
+<h2>Result = <%= result %></h2>
+STEP 11: Run the Application
+
+Where: NetBeans Server
+
+Run
+
+index.jsp
+
+Example Input
+
+Number 1 = 8
+Number 2 = 12
+
+Output
+
+Result = 20
+LOGIC USED
+result = a + b
+
+Adds the two numbers using SOAP web service.

@@ -1,0 +1,192 @@
+Practical 5: REST CRUD Product Service
+(Where to Perform Each Step)
+STEP 1: Update System Packages
+
+Where to perform: Terminal (Ubuntu / Linux)
+
+Open Terminal and run:
+
+sudo apt update -y && sudo apt upgrade -y
+
+Purpose: Updates system packages before installing software.
+
+STEP 2: Install Required Software
+
+Where to perform: Terminal
+
+Run these commands:
+
+sudo apt install openjdk-11-jdk -y
+sudo apt install mysql-server -y
+sudo apt install maven -y
+
+Purpose:
+
+Java → run application
+
+MySQL → database
+
+Maven → project dependency management
+
+Check Java installation:
+
+java -version
+STEP 3: Create Product Database
+
+Where to perform: MySQL Terminal
+
+Open MySQL:
+
+sudo mysql -u root -p
+
+Now run SQL commands inside MySQL:
+
+CREATE DATABASE productdb;
+USE productdb;
+CREATE TABLE product(
+id INT PRIMARY KEY AUTO_INCREMENT,
+product_name VARCHAR(50),
+quantity INT,
+expiry_date DATE
+);
+
+Check table:
+
+SHOW TABLES;
+
+Exit MySQL:
+
+EXIT;
+STEP 4: Create REST Web Application
+
+Where to perform: NetBeans / Eclipse IDE
+
+Steps inside IDE:
+
+File → New Project
+
+Select:
+
+Maven Project
+
+Project Name:
+
+ProductRESTService
+
+Purpose: Create Java REST project.
+
+STEP 5: Add Dependencies
+
+Where to perform: Inside IDE (pom.xml file)
+
+Open:
+
+pom.xml
+
+Add dependencies inside <dependencies> section.
+
+Purpose:
+
+Jersey → REST framework
+
+MySQL connector → database connection
+
+STEP 6: Create Product Model Class
+
+Where to perform: Inside IDE
+
+Create Java Class:
+
+Product.java
+
+Location:
+
+src/main/java
+
+Purpose: Represents Product data structure.
+
+STEP 7: Create Database Connection Class
+
+Where to perform: Inside IDE
+
+Create Java Class:
+
+DBConnection.java
+
+Purpose: Connects Java application to MySQL database.
+
+STEP 8: Create REST Service Class
+
+Where to perform: Inside IDE
+
+Create Java Class:
+
+ProductService.java
+
+Purpose: Implements REST APIs.
+
+Operations:
+
+GET → Read products
+
+POST → Add product
+
+PUT → Update product
+
+DELETE → Delete product
+
+STEP 9: Deploy REST Service
+
+Where to perform: IDE Server (Tomcat / GlassFish)
+
+Steps:
+
+Right click project
+
+Run Project
+
+Server starts automatically.
+
+Service URL:
+
+http://localhost:8080/ProductRESTService/products
+STEP 10: Test REST APIs
+
+Where to perform: Postman (or browser)
+
+Open Postman
+
+Test operations.
+
+CREATE PRODUCT (POST)
+
+URL
+
+POST http://localhost:8080/ProductRESTService/products
+
+Body → JSON
+
+{
+"product_name":"Milk",
+"quantity":20,
+"expiry_date":"2026-04-10"
+}
+READ PRODUCTS (GET)
+GET http://localhost:8080/ProductRESTService/products
+
+Returns product list.
+
+UPDATE PRODUCT (PUT)
+PUT http://localhost:8080/ProductRESTService/products/1
+
+JSON:
+
+{
+"product_name":"Milk Packet",
+"quantity":25,
+"expiry_date":"2026-05-01"
+}
+DELETE PRODUCT (DELETE)
+DELETE http://localhost:8080/ProductRESTService/products/1
+
+Deletes product.

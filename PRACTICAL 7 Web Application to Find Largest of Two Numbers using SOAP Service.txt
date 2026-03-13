@@ -1,0 +1,201 @@
+PRACTICAL 7: Web Application to Find Largest of Two Numbers using SOAP Service
+AIM
+
+To create and deploy a SOAP Web Service that finds the largest of two numbers and access the service through a web application interface (JSP).
+
+STEP 1: Create Web Application Project
+
+Where: NetBeans IDE
+
+Open NetBeans
+
+Click
+
+File → New Project
+
+Select
+
+Java Web → Web Application
+
+Enter project details
+
+Project Name : LargestNumberSOAP
+Server : GlassFish Server
+
+Click Finish
+
+STEP 2: Create SOAP Web Service
+
+Where: NetBeans IDE
+
+Right click project
+
+New → Web Service
+
+Enter
+
+Web Service Name : LargestService
+Package Name : largest
+
+Click Finish
+
+STEP 3: Write Web Service Code
+
+Where: NetBeans (LargestService.java)
+
+File:
+
+LargestService.java
+Simplified Code
+package largest;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+
+@WebService
+
+public class LargestService {
+
+    @WebMethod
+    public int findLargest(int num1, int num2) {
+
+        if(num1 > num2)
+            return num1;
+        else
+            return num2;
+
+    }
+
+}
+
+Explanation
+The method compares two numbers and returns the larger number.
+
+STEP 4: Deploy the Web Service
+
+Where: NetBeans Server (GlassFish)
+
+Right click project
+
+Run
+
+Server starts and deploys the SOAP service.
+
+STEP 5: Check WSDL File
+
+Where: Browser
+
+Open browser and enter:
+
+http://localhost:8080/LargestNumberSOAP/LargestService?wsdl
+
+If XML appears → Web Service is running successfully.
+
+STEP 6: Create Web Service Client
+
+Where: NetBeans IDE
+
+Right click project
+
+New → Web Service Client
+
+Enter WSDL URL
+
+http://localhost:8080/LargestNumberSOAP/LargestService?wsdl
+
+Click Finish
+
+NetBeans automatically generates client classes.
+
+STEP 7: Create Web Interface (JSP Page)
+
+Where: NetBeans IDE
+
+Right click Web Pages
+
+New → JSP
+
+File Name
+
+index.jsp
+STEP 8: Write JSP Code
+
+Where: NetBeans (index.jsp)
+
+Simplified JSP Code
+<%@ page import="largest.LargestService_Service" %>
+<%@ page import="largest.LargestService" %>
+
+<html>
+<head>
+<title>Find Largest Number</title>
+</head>
+
+<body>
+
+<h2>Find Largest of Two Numbers</h2>
+
+<form method="post">
+
+Enter Number 1:
+<input type="text" name="num1"><br><br>
+
+Enter Number 2:
+<input type="text" name="num2"><br><br>
+
+<input type="submit" value="Find Largest">
+
+</form>
+
+<%
+
+if(request.getParameter("num1") != null){
+
+int n1 = Integer.parseInt(request.getParameter("num1"));
+int n2 = Integer.parseInt(request.getParameter("num2"));
+
+LargestService_Service service = new LargestService_Service();
+LargestService port = service.getLargestServicePort();
+
+int result = port.findLargest(n1,n2);
+
+%>
+
+<h3>Largest Number is: <%= result %></h3>
+
+<%
+
+}
+
+%>
+
+</body>
+</html>
+STEP 9: Run the Web Application
+
+Where: NetBeans Server
+
+Right click project
+
+Run Project
+
+Open browser:
+
+http://localhost:8080/LargestNumberSOAP/
+STEP 10: Test the Application
+
+Example Input
+
+Number 1 = 10
+Number 2 = 25
+
+Output
+
+Largest Number = 25
+LOGIC USED
+if(num1 > num2)
+return num1;
+else
+return num2;
+
+This compares two numbers and returns the larger value.

@@ -1,0 +1,183 @@
+PRACTICAL 6: SOAP Web Service to Calculate Factorial
+AIM
+
+To implement a SOAP Web Service that calculates the factorial of a number and create a client application to consume the service.
+
+STEP 1: Create Web Service Project
+
+Where: NetBeans IDE
+
+Open NetBeans
+
+Click
+
+File → New Project
+
+Select
+
+Java Web → Web Application
+
+Project Name
+
+FactorialWebService
+
+Select Server
+
+GlassFish Server
+
+Click Finish
+
+STEP 2: Create Web Service
+
+Where: NetBeans IDE
+
+Right click project
+
+New → Web Service
+
+Enter
+
+Web Service Name : FactorialService
+Package Name : factorial
+
+Click Finish
+
+STEP 3: Write Web Service Code
+
+Where: Inside NetBeans (FactorialService.java)
+
+File:
+
+FactorialService.java
+Simplified Code
+package factorial;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+
+@WebService
+
+public class FactorialService {
+
+    @WebMethod
+    public long factorial(int number) {
+
+        long fact = 1;
+
+        for(int i = 1; i <= number; i++){
+            fact = fact * i;
+        }
+
+        return fact;
+    }
+
+}
+
+Explanation:
+
+fact = fact * i
+
+This multiplies numbers from 1 to n to calculate factorial.
+
+Example:
+
+5! = 5 × 4 × 3 × 2 × 1 = 120
+STEP 4: Deploy the Web Service
+
+Where: NetBeans Server (GlassFish)
+
+Right click project
+
+Run
+
+Server starts and deploys the service.
+
+STEP 5: Check WSDL File
+
+Where: Browser
+
+Open browser and enter:
+
+http://localhost:8080/FactorialWebService/FactorialService?wsdl
+
+If XML appears → Web Service is running correctly.
+
+STEP 6: Create Client Application
+
+Where: NetBeans IDE
+
+Create new project
+
+File → New Project → Java Application
+
+Project Name
+
+FactorialClient
+
+Click Finish
+
+STEP 7: Generate Web Service Client
+
+Where: NetBeans IDE
+
+Right click project
+
+New → Web Service Client
+
+Enter WSDL URL
+
+http://localhost:8080/FactorialWebService/FactorialService?wsdl
+
+Click Finish
+
+NetBeans automatically generates client classes.
+
+STEP 8: Write Client Program
+
+Where: NetBeans (Main.java)
+
+File:
+
+Main.java
+Simplified Client Code
+package factorialclient;
+
+import factorial.FactorialService;
+import factorial.FactorialService_Service;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        FactorialService_Service service = new FactorialService_Service();
+
+        FactorialService port = service.getFactorialServicePort();
+
+        int number = 5;
+
+        long result = port.factorial(number);
+
+        System.out.println("Factorial of " + number + " = " + result);
+
+    }
+
+}
+STEP 9: Run Client Program
+
+Where: NetBeans IDE
+
+Run
+
+Main.java
+
+Output:
+
+Factorial of 5 = 120
+
+
+Example
+
+5! = 5 × 4 × 3 × 2 × 1 = 120
+RESULT
+
+SOAP Web Service to calculate factorial of a number was successfully implemented and accessed using a client application.
